@@ -1,29 +1,31 @@
 package com.example.mvpexample.ui.fragments.main
 
-import androidx.recyclerview.widget.DiffUtil
 import com.example.mvpexample.data.model.RemoteImageData
 import com.example.mvpexample.data.usecase.GetImagesUseCase
 import com.example.mvpexample.ui.mvp.base.BaseRequestPresenter
+import com.example.mvpexample.ui.utils.AsyncDiffUtillCalculator
 import javax.inject.Inject
 
 class MainScreenPresenter @Inject constructor(
     view: MainScreenContract.IView,
-    private val getImagesUseCase: GetImagesUseCase
+    private val getImagesUseCase: GetImagesUseCase,
+    private val asyncDiffCalculator: AsyncDiffUtillCalculator
 ) : BaseRequestPresenter<MainScreenContract.IView>(view),
     MainScreenContract.IPresenter {
 
     private var imagesData = emptyList<RemoteImageData>()
 
     override fun requestLoadImages() {
-        getImagesUseCase.invoke().processOnIOSubscribe(onSuccess = ::handleImagesData)
+        getImagesUseCase().processOnIOSubscribe(onSuccess = ::handleImagesData)
     }
 
     private fun handleImagesData(imagesData: List<RemoteImageData>) {
         val diffUtill = ImagesDiffUtill(this.imagesData, imagesData)
-        val diffResult = DiffUtil.calculateDiff(diffUtill)
-        this.imagesData = imagesData
-        view?.imagesAdapter?.setDiffResult(diffResult)
-        view?.imagesAdapter?.dataCount = imagesData.size
+        asyncDiffCalculator.calculateDiff(diffUtill) { diffResult ->
+            this.imagesData = imagesData
+            view?.imagesAdapter?.setDiffResult(diffResult)
+            view?.imagesAdapter?.dataCount = imagesData.size
+        }
     }
 
     override fun bindHolder(holder: MainScreenContract.ISimpleImageHolder) {
@@ -33,8 +35,11 @@ class MainScreenPresenter @Inject constructor(
         holder.setViewsCount(currentItem.views)
     }
 
-    override fun onHolderClick(holder: MainScreenContract.ISimpleImageHolder) {
+    override fun onHolderClick(holder: MainScreenContract.ISimpleImageHolder) {}
 
+    override fun onDestroy() {
+        asyncDiffCalculator.release()
+        super.onDestroy()
     }
 
 }

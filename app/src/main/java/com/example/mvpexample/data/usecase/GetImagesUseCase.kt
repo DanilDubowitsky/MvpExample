@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetImagesUseCase @Inject constructor(
     private val imagesService: IService.IImagesService
 ) {
-    fun invoke(): Single<List<RemoteImageData>> =
+    operator fun invoke(): Single<List<RemoteImageData>> =
         imagesService.loadImages().map { remoteData ->
             remoteData.hits
         }
