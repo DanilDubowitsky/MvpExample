@@ -16,6 +16,7 @@ class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         Glide.with(binding.image)
             .load(imageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .centerCrop()
             .into(binding.image)
     }
 

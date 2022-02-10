@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.ethanhua.skeleton.RecyclerViewSkeletonScreen
+import com.ethanhua.skeleton.Skeleton
 import com.example.mvpexample.R
-import com.example.mvpexample.data.model.RemoteImageData
 import com.example.mvpexample.databinding.FragmentMainScreenBinding
 import com.example.mvpexample.ui.mvp.base.BaseMvpFragment
 import javax.inject.Inject
@@ -28,8 +29,6 @@ class MainScreenFragment : BaseMvpFragment<MainScreenContract.IPresenter>(), Mai
     private fun setupRecycler() {
         binding.imagesRecycler.adapter = imagesAdapter as RecyclerView.Adapter<*>
     }
-
-    override fun showImages(list: List<RemoteImageData>) {}
 
     override fun bindHolder(holder: MainScreenContract.ISimpleImageHolder) {
         presenter.bindHolder(holder)

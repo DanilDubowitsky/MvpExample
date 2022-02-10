@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme.Default" parent="Theme.MvpExample">
+        <item name="android:windowBackground">@color/lightGray</item>
+        <item name="android:statusBarColor">@color/gray</item>
+    </style>
+
     <style name="Text.Regular" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/fira_sans</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
     </style>
-
-
 
 </resources>

@@ -23,7 +23,7 @@ class MainScreenPresenter @Inject constructor(
         val diffResult = DiffUtil.calculateDiff(diffUtill)
         this.imagesData = imagesData
         view?.imagesAdapter?.setDiffResult(diffResult)
-        view?.imagesAdapter?.setDataCount(imagesData.size)
+        view?.imagesAdapter?.dataCount = imagesData.size
     }
 
     override fun bindHolder(holder: MainScreenContract.ISimpleImageHolder) {
