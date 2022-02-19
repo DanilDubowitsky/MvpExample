@@ -12,6 +12,8 @@ interface ISimpleRecyclerContract {
         var dataCount: Int
         fun setDiffResult(diffResult: DiffUtil.DiffResult)
         fun notifyDataChanges()
+        fun notifyItemRangeInsert(position: Int, itemCount: Int)
+        fun notifyItemChange(position: Int)
     }
 
     interface ISimpleHolderController<H : ISimpleHolder> {

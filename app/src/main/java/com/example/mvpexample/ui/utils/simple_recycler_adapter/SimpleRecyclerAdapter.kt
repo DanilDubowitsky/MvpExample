@@ -11,8 +11,19 @@ abstract class SimpleRecyclerAdapter<H : ISimpleRecyclerContract.ISimpleHolder>(
     override var dataCount: Int = 0
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val typedHolder = holder as H
+        val typedHolder = holder as? H ?: return
         controller.bindHolder(typedHolder)
+        holder.itemView.setOnClickListener {
+            controller.onHolderClick(typedHolder)
+        }
+    }
+
+    override fun notifyItemChange(position: Int) {
+        notifyItemChanged(position)
+    }
+
+    override fun notifyItemRangeInsert(position: Int, itemCount: Int) {
+        notifyItemRangeInserted(position, itemCount)
     }
 
     override fun getItemCount(): Int = dataCount

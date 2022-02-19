@@ -9,8 +9,8 @@ class ImagesService @Inject constructor(
     private val imagesNetworkApi: ImagesApi
 ) : IService.IImagesService {
 
-    override fun loadImages(): Single<RemoteImagesData> {
-        return imagesNetworkApi.getImages()
+    override fun loadImages(pageNumber: Int): Single<RemoteImagesData> {
+        return imagesNetworkApi.getImages(pageNumber)
     }
 
 }

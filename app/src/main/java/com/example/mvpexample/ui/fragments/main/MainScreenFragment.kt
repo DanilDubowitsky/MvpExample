@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.ethanhua.skeleton.RecyclerViewSkeletonScreen
-import com.ethanhua.skeleton.Skeleton
 import com.example.mvpexample.R
 import com.example.mvpexample.databinding.FragmentMainScreenBinding
 import com.example.mvpexample.ui.mvp.base.BaseMvpFragment
+import com.example.mvpexample.ui.utils.ViewUtils.setPageChangeListener
 import javax.inject.Inject
 
 class MainScreenFragment : BaseMvpFragment<MainScreenContract.IPresenter>(), MainScreenContract.IView {
@@ -26,8 +25,10 @@ class MainScreenFragment : BaseMvpFragment<MainScreenContract.IPresenter>(), Mai
         presenter.requestLoadImages()
     }
 
-    private fun setupRecycler() {
-        binding.imagesRecycler.adapter = imagesAdapter as RecyclerView.Adapter<*>
+    override fun addPageListener() {
+        binding.imagesRecycler.setPageChangeListener(IMAGE_RECYCLER_THRESHOLD) {
+            presenter.requestLoadImages()
+        }
     }
 
     override fun bindHolder(holder: MainScreenContract.ISimpleImageHolder) {
@@ -36,6 +37,14 @@ class MainScreenFragment : BaseMvpFragment<MainScreenContract.IPresenter>(), Mai
 
     override fun onHolderClick(holder: MainScreenContract.ISimpleImageHolder) {
         presenter.onHolderClick(holder)
+    }
+
+    private fun setupRecycler() {
+        binding.imagesRecycler.adapter = imagesAdapter as RecyclerView.Adapter<*>
+    }
+
+    companion object {
+        private const val IMAGE_RECYCLER_THRESHOLD = 3
     }
 
 }
