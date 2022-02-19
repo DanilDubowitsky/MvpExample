@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Single
 interface IService {
 
     interface IImagesService : IService {
-        fun loadImages(): Single<RemoteImagesData>
+        fun loadImages(pageNumber: Int): Single<RemoteImagesData>
     }
 
 }

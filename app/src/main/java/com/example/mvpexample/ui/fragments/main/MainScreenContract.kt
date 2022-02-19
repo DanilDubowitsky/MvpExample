@@ -8,6 +8,7 @@ interface MainScreenContract {
 
     interface IView : MvpContract.IView, IHolderController {
         val imagesAdapter: ImagesRecyclerAdapter
+        fun addPageListener()
     }
 
     interface IPresenter : MvpContract.IPresenter, IHolderController {
@@ -15,7 +16,10 @@ interface MainScreenContract {
     }
 
     interface ImagesRecyclerAdapter :
-        ISimpleRecyclerContract.ISimpleRecyclerAdapter<ISimpleImageHolder>
+        ISimpleRecyclerContract.ISimpleRecyclerAdapter<ISimpleImageHolder> {
+            fun getListPosition(holder: ISimpleImageHolder): Int
+            fun setFooterVisibility(isVisible: Boolean)
+        }
 
     interface ISimpleImageHolder : ISimpleRecyclerContract.ISimpleHolder {
         fun setImage(imageUrl: String)
