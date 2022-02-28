@@ -25,9 +25,11 @@ interface MainScreenContract {
         fun setImage(imageUrl: String)
         fun setLikesCount(likes: Int)
         fun setViewsCount(views: Int)
+        fun setActionListener(onAction: (ImageHolderActions) -> Unit)
     }
 
-    interface IHolderController :
-        ISimpleRecyclerContract.ISimpleHolderController<ISimpleImageHolder>
+    interface IHolderController : ISimpleRecyclerContract.ISimpleHolderController<ISimpleImageHolder> {
+        fun onHolderAction(action: ImageHolderActions, position: Int)
+    }
 
 }

@@ -11,7 +11,7 @@ import com.example.mvpexample.ui.utils.simple_recycler_adapter.SimpleRecyclerAda
 import javax.inject.Inject
 
 class ImagesRecyclerAdapter @Inject constructor(
-    holderController: MainScreenContract.IHolderController
+    private val holderController: MainScreenContract.IHolderController
 ) : SimpleRecyclerAdapter<MainScreenContract.ISimpleImageHolder>(holderController),
     MainScreenContract.ImagesRecyclerAdapter {
 
@@ -28,6 +28,11 @@ class ImagesRecyclerAdapter @Inject constructor(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is FooterImageLoadingHolder) {
             holder.itemView.isVisible = isHeaderVisible
+        }
+        if(holder is MainScreenContract.ISimpleImageHolder) {
+            holder.setActionListener { action ->
+                holderController.onHolderAction(action, position)
+            }
         }
         super.onBindViewHolder(holder, position)
     }
