@@ -31,6 +31,10 @@ class MainScreenFragment : BaseMvpFragment<MainScreenContract.IPresenter>(), Mai
         }
     }
 
+    override fun onHolderAction(action: ImageHolderActions, position: Int) {
+        presenter.onHolderAction(action, position)
+    }
+
     override fun bindHolder(holder: MainScreenContract.ISimpleImageHolder) {
         presenter.bindHolder(holder)
     }

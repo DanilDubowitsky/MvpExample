@@ -1,8 +1,8 @@
 package com.example.mvpexample.ui.fragments.main
 
+import android.util.Log
 import com.example.mvpexample.data.model.RemoteImageData
 import com.example.mvpexample.data.usecase.GetImagesUseCase
-import com.example.mvpexample.ui.fragments.main.ImagesRecyclerAdapter.Companion.FOOTER_COUNTER
 import com.example.mvpexample.ui.mvp.base.BaseRequestPresenter
 import com.example.mvpexample.ui.utils.AsyncDiffUtillCalculator
 import javax.inject.Inject
@@ -48,11 +48,20 @@ class MainScreenPresenter @Inject constructor(
         holder.setViewsCount(currentItem.views)
     }
 
-    override fun onHolderClick(holder: MainScreenContract.ISimpleImageHolder) {}
+    override fun onHolderClick(holder: MainScreenContract.ISimpleImageHolder) {
+        Log.e("HODLER_ACTION", "${holder.getAdapterPosition()}")
+    }
 
     override fun onDestroy() {
         asyncDiffCalculator.release()
         super.onDestroy()
+    }
+
+    override fun onHolderAction(action: ImageHolderActions, position: Int) {
+        when(action) {
+            ImageHolderActions.LIKE_CLICK -> Log.e("LIKE_CLICK", "$position")
+            ImageHolderActions.IMAGE_CLICK -> Log.e("IMAGE_CLICK", "$position")
+        }
     }
 
     companion object {
